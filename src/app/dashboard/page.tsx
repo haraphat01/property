@@ -27,38 +27,56 @@ const Dashboard = () => {
         return isImage;
     };
 
+
     const onFinish = async () => {
-        // setLoading(true);
         const formValues = form.getFieldsValue();
-        console.log('Received values:', formValues);
-        // const apiUrl = '/api/listingApi';
-        // try {
+        const imageUrls = fileList.map(file => {
+            // If the file has a response and URL, it's been uploaded
+            if (file.response && file.response.url) {
+                return file.response.url;
+            }
+            // If the file is local and hasn't been uploaded, use the local preview URL
+            // Note: This assumes you're using a file reader or similar approach to generate previews
+            else if (file.thumbUrl) {
+                return file.thumbUrl;
+            }
+            // If using object URLs for local files (not yet uploaded)
+            else if (file.originFileObj) {
+                return URL.createObjectURL(file.originFileObj);
+            }
+            return null; // Return null if no URL is available
+        }).filter(url => url != null); // Filter out any null values
 
-        //     const response = await fetch(apiUrl, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({ data: formValues }),
-        //     });
 
-        //     if (response.ok) {
-        //         const result = await response.json();
-        //         setAlert(true);
-        //         form.resetFields();
-        //         router.push('/');
+        // Prepare data to send to API
+        const requestData = {
+            ...formValues,
+            imageUrls: imageUrls,
+        };
+        console.log(requestData)
 
-        //     } else {
-        //         console.error('Failed to send data:', response.statusText);
-        //     }
-        // } catch (error) {
-        //     console.error('Error:', error);
-        // }
+        const apiUrl = '/api/generateDescriptionApi'; // Your API route URL
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                // Handle the response as needed
+            } else {
+                console.error('Failed to send data:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
-    // const onFinish = (values) => {
-    //     console.log('Received values:', values);
-    //     // Handle form submission here
-    //   };
+
+
 
     return (
         <div className="div">
