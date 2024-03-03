@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Homepage = () => {
     // component logic
     return (
@@ -46,15 +48,9 @@ const Homepage = () => {
                     <p>Whether you're listing a luxury apartment, a cozy cottage, or a commercial space, our app provides tailored descriptions to suit various property types and locations.</p>
                 </div>
             </div>
-            <button className="mt-8 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition-colors duration-300">Get Started</button>
-            <footer className="mt-8">
-                <nav className="flex items-center justify-center space-x-4">
-                    <a href="#" className="text-white hover:text-gray-300">About Us</a>
-                    <a href="#" className="text-white hover:text-gray-300">Contact</a>
-                    <a href="#" className="text-white hover:text-gray-300">Privacy Policy</a>
-                </nav>
-                {/* Social media icons can be added here */}
-            </footer>
+            <Link href={`/login`}>
+                <button className="mt-8 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition-colors duration-300">Get Started</button>
+            </Link>
         </div>
     );
 
