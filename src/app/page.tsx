@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import { NextUIProvider } from "@nextui-org/react";
 import Homepage from "./components/Home";

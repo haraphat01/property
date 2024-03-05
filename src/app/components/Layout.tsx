@@ -1,3 +1,4 @@
+"use client"
 import Footer from "./Footer"
 import Navigate from "../components/Navigation"
 const Layout = ({ children }) => {
