@@ -47,14 +47,16 @@ const Dashboard = () => {
             }
             return null; // Return null if no URL is available
         }).filter(url => url != null); // Filter out any null values
-
-
+     
+        
         // Prepare data to send to API
         const requestData = {
             ...formValues,
-            imageUrls: imageUrls,
+            imageUrls: imageUrls
         };
-        console.log(requestData)
+       
+
+        
 
         const apiUrl = '/api/description'; // Your API route URL
         try {
@@ -63,7 +65,11 @@ const Dashboard = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(requestData),
+                body: JSON.stringify({
+                    imageUrls: imageUrls,
+                    propertyType: "propertyType",
+                    location: "location"
+                }),
             });
 
             if (response.ok) {
